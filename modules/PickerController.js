@@ -7,15 +7,17 @@ class PickerController {
         this.password = password;
         this.cookieToken = null;
         this.classList = [];
-        this.loginAuth = this.loginAuth.bind(this);
-        this.addPickingClass = this.addPickingClass.bind(this);
-        this.removePickingClass = this.removePickingClass.bind(this);
-        this.pick = this.pick.bind(this);
+        this.realName = null;   //including real name and student No
+        // this.loginAuth = this.loginAuth.bind(this);
+        // this.addPickingClass = this.addPickingClass.bind(this);
+        // this.removePickingClass = this.removePickingClass.bind(this);
+        // this.pick = this.pick.bind(this);
     }
 
     async loginAuth() {
         const lc = new LoginAuthController();
         this.cookieToken = await lc.login({username: this.username, password: this.password});
+        this.realName = await lc.getRealName(this.cookieToken);
     }
 
     addPickingClass({clsID, clsNum}) {
@@ -39,7 +41,7 @@ class PickerController {
         .then(results => {
             res = results;
         });
-        return res;
+        return {name: this.realName, res};
     }
 
 }
@@ -72,6 +74,21 @@ class LoginAuthController {
         return cookieToken;
     }
 
+    async getRealName(cookieToken) {
+        let nameAndNo = null;
+        await rp({
+            url: 'http://bkjwxk.sdu.edu.cn/f/common/main',
+            method: 'get',
+            headers: {
+                cookie: cookieToken
+            }
+        })
+        .then(res => {
+            nameAndNo = /class="username">(.*)<\/span>/.exec(res)[1];
+        });
+        return nameAndNo;
+    }
+
 }
 
 class PickClassController {
@@ -89,7 +106,7 @@ class PickClassController {
             resBody = body;
         });
 
-        return resBody;
+        return {clsID, clsNum, resBody};
     }
 }
 

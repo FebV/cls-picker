@@ -25,53 +25,65 @@ router.get('/api', (ctx, next) => {
 
 router.post('/api/users', (ctx, next) => {
     const newUser = ctx.request.body;
-    if(users.filter(val => val.username == newUser) == 0)
-        users.push(newUser);
+    if(pickers.filter(val => val.username == newUser.username) == 0)
+        pickers.push(new pickerController(newUser));
+})
+
+router.post('/api/class', (ctx, next) => {
+    const {token, clsID, clsNum} = ctx.request.body;
+    pickers.map(val => {
+        if(val.username == token)
+            val.addPickingClass({clsID, clsNum});
+    })
 })
 
 router.get('/api/status', (ctx, next) => {
-    console.log(JSON.stringify(users));
     console.log(JSON.stringify(pickers));
     ctx.body = 'status';
+})
+
+router.get('/api/pick', async (ctx, next) => {
+    await pick();
 })
 
 app.use(router.routes());
 app.listen(3000);
 
 // let users = [];
-// let pickers = [];
+let pickers = [];
 
-// async function pick() {
-//     pickers.map(async val => {
-//         if(val.cookieToken === null) {
-//             try{
-//                 await val.loginAuth();
-//             }
-//             catch(e) {
-//                 users = users.filter(ele => ele.username != val.username);
-//                 pickers = pickers.filter(ele => ele.username != val.username);
-//             }
-//         }
-//         const result = await val.pick();
-//         console.log(val.username + result);
-//     })
-//     // const pc = pickerController({username: '201400301165', password: '555751'});
-//     // await pc.loginAuth();
-
-//     // pc.addPickingClass({clsID: 'sd03030310', clsNum: '100'});
-//     // pc.addPickingClass({clsID: 'sd03031340', clsNum: '0'});
-//     // pc.removePickingClass({clsID: 'sd03031340', clsNum: '0'});
-//     // const result = await pc.pick();
-//     // console.log(result);
-// };
-
-// function dispatchPicker() {
-//     for(let u of users) {
-//         if(pickers.filter(val => val.username == u.username).length == 0)
-//             pickers.push(pickerController(u));
-//     }
-// }
-
+async function pick() {
+    pickers.map(async val => {
+        if(val.cookieToken === null) {
+            try{
+                await val.loginAuth();
+            }
+            catch(e) {
+                pickers = pickers.filter(ele => ele.username != val.username);
+                console.log(`${val.username} has been removed for wrong username/password`);
+                return;
+            }
+        }
+        if(val.classList.length === 0) {
+            console.log(`no class list for ${val.realName}`);
+            return;
+        }
+        const pickingResults = await val.pick();
+        results = pickingResults.res;
+        results.map(ele => {
+            row = JSON.parse(ele.resBody);
+            if( row.result == 'error') {
+                // console.log(`${val.realName} ${row.msg}`);
+                // console.log(`${/\[(..\d+)/.exec(row.msg)[1]} has been removed for ${val.realName}`);
+                val.removePickingClass(ele.clsID);
+                console.log(`${ele.clsID} has been removed for reason ${row.msg}`);
+                return;
+            }
+        })
+        console.log(`${val.realName}  ${pickingResults}`);
+    });
+}
+ 
 // setInterval(() => {
 //     dispatchPicker();
 //     console.log('dispatch');
