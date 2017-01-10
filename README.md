@@ -13,7 +13,7 @@ using request-promise
 ## build 
 node > 7.0 required [download at here](https://nodejs.org/en/)  
 
-exec this command at project root directory  
+execute this command at project root directory  
 ```
 npm install
 ```
@@ -21,7 +21,10 @@ npm install
 ## run
 modify config.exp.js to match your own info  
 rename config.exp.js to config.js  
+execute this command at project root directory  
+```
 npm start
+```
 
 ## status
 
