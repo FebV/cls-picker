@@ -7,8 +7,8 @@ node > 7.0 required
 npm install
 
 ## run
-modify config.exp.js to match your own info
-rename config.exp.js to config.js
+modify config.exp.js to match your own info  
+rename config.exp.js to config.js  
 npm start
 
 ## status
