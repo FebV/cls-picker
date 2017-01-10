@@ -3,7 +3,7 @@ auto-class-picker for sdu student
 picking on every second  
 
 planning to support 3 modes  
-local CLI mode  (done)
+local CLI mode  (done)  
 local Web mode  
 online Web mode  
 
@@ -28,6 +28,6 @@ npm start
 
 ## status
 
-CLI mode done  
+local CLI mode done  
 on startup  
 20%  
