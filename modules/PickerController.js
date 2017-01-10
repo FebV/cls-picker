@@ -3,8 +3,8 @@ const rp = require('request-promise');
 
 class PickerController {
     constructor({username, password}) {
-        this.username = username;
-        this.password = password;
+        this.username = '' + username;
+        this.password = '' + password;
         this.cookieToken = null;
         this.classList = [];
         this.realName = null;   //including real name and student No
@@ -21,7 +21,11 @@ class PickerController {
     }
 
     addPickingClass({clsID, clsNum}) {
-        this.classList.push({clsID, clsNum});
+        const obj = {
+            clsID: '' + clsID,
+            clsNum: '' + clsNum
+        }
+        this.classList.push(obj);
     }
 
     removePickingClass({clsID}) {

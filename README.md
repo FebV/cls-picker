@@ -1,4 +1,12 @@
 # cls-picker
+auto-class-picker for sdu student  
+picking on every second  
+
+planning to support 3 modes  
+local CLI mode  (done)
+local Web mode  
+online Web mode  
+
 using koa2  
 using request-promise
 
@@ -13,6 +21,6 @@ npm start
 
 ## status
 
-CLI mode  
+CLI mode done  
 on startup  
-50%  
+20%  
