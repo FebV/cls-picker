@@ -12,6 +12,7 @@
   },
   "devDependencies": {},
   "scripts": {
+    "start": "node --harmony localPicker.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "FebV",

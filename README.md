@@ -7,11 +7,11 @@ node > 7.0 required
 npm install
 
 ## run
-node --harmony index.js
+rename config.exp.js to config.js
+npm start
 
 ## status
 
 CLI mode  
-need to modify code   
 on startup  
-10%  
+50%  
