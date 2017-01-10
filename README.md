@@ -11,7 +11,7 @@ using koa2
 using request-promise
 
 ## build 
-node > 7.0 required  
+node > 7.0 required[download at here](https://nodejs.org/en/)  
 npm install
 
 ## run
