@@ -11,8 +11,12 @@ using koa2
 using request-promise
 
 ## build 
-node > 7.0 required[download at here](https://nodejs.org/en/)  
+node > 7.0 required [download at here](https://nodejs.org/en/)  
+
+exec this command at project root directory  
+```
 npm install
+```
 
 ## run
 modify config.exp.js to match your own info  
